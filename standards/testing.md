@@ -9,14 +9,16 @@ All backend tests are written and run with **pytest** (pytest-django for Django 
 - Run coverage reporting (`pytest --cov`) as part of validating each phase, not just once at the end of the project.
 
 ## Phase gating
-Every implementation phase must have its full pytest suite passing before moving on to the next phase. Never proceed to the next phase with failing or skipped tests.
+Every implementation phase must have its full pytest suite passing before moving on to the next phase. Never proceed to the next phase with failing or skipped tests. "Full suite" includes both the implementer's own tests and the independently spec-authored tests (see workflow.md's "Independent test authoring") — a phase isn't done until both pass.
 
 If tests fail after implementing a phase:
 1. Diagnose and attempt to fix the failure.
 2. Retry up to **3 attempts total** (the initial run plus 2 fix attempts).
 3. If tests are still failing after the 3rd attempt, stop. Summarize what's failing, what you already tried, and ask the user for guidance before continuing. Do not keep retrying indefinitely, and do not move on to the next phase with known-failing tests.
 
+Once a phase's suite passes, its pull request (see workflow.md) must describe what was tested and how — this is what the independent reviewer checks the code against before merge.
+
 (The retry limit is a default — a specific project can override it in its own CLAUDE.md if the user wants a different number.)
 
 ## Frontend
-Frontend changes need corresponding tests (React Testing Library or equivalent) held to the same "must pass before moving on" bar, even though the retry protocol above is described in pytest terms.
+Frontend changes need corresponding tests (React Testing Library or equivalent) held to the same "must pass before moving on" bar, even though the retry protocol above is described in pytest terms.  Playwright should be used to confirm frontend functionality.
