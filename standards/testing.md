@@ -18,6 +18,8 @@ If tests fail after implementing a phase:
 
 Once a phase's suite passes, its pull request (see workflow.md) must describe what was tested and how — this is what the independent reviewer checks the code against before merge.
 
+A green suite is not the same as a working feature: automated tests exercise application code directly and don't catch session-state or environment-specific bugs (auth/token expiry being the canonical example) the way a real browser session does. For phases that ship or change user-facing behavior, the suite passing is necessary but not sufficient — see workflow.md's "Independent feature verification (browser click-through)" for the additional check required before merge.
+
 (The retry limit is a default — a specific project can override it in its own CLAUDE.md if the user wants a different number.)
 
 ## Frontend
